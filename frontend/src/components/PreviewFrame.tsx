@@ -8,13 +8,15 @@ interface PreviewFrameProps {
 
 export function PreviewFrame({ files, webContainer }: PreviewFrameProps) {
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);  // Track loading state
 
   async function main() {
     try {
-      // Set up the event listener first
+      // Set up the event listener to handle the server-ready event
       webContainer.on('server-ready', (port, url) => {
         console.log(`Server ready on port ${port} at ${url}`);
         setUrl(url);
+        setLoading(false);  // Set loading to false when the server is ready
       });
 
       // Install dependencies
@@ -28,10 +30,11 @@ export function PreviewFrame({ files, webContainer }: PreviewFrameProps) {
       // Start the dev server
       await webContainer.spawn('npm', ['run', 'dev']);
 
-      // Check if the server is ready
+      // Wait for `server-ready` event
       console.log('Waiting for server to be ready...');
     } catch (error) {
       console.error('Error during setup:', error);
+      setLoading(false);  // Set loading to false in case of error
     }
   }
 
@@ -41,12 +44,18 @@ export function PreviewFrame({ files, webContainer }: PreviewFrameProps) {
 
   return (
     <div className="h-full flex items-center justify-center text-gray-400">
-      {!url ? (
+      {loading ? (
         <div className="text-center">
           <p className="mb-2">Loading...</p>
         </div>
       ) : (
-        <iframe width="100%" height="100%" src={url} title="Preview" />
+        <iframe
+          width="100%"
+          height="100%"
+          src={url}
+          title="Preview"
+          style={{ border: 'none' }} // Ensure no border around the iframe
+        />
       )}
     </div>
   );
