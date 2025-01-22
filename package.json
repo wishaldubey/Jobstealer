@@ -2,8 +2,9 @@
   "name": "be",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-  "build": "tsc -b",
+"scripts": {
+  "clean": "rm -rf dist",
+  "build": "npm run clean && tsc -b",
   "start": "node dist/index.js",
   "dev": "tsc -b && node dist/index.js"
 },
