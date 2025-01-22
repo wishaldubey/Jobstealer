@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: be-backend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    branch: main
+    region: oregon
+    plan: free
