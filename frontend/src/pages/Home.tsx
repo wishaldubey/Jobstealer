@@ -21,12 +21,10 @@ export function Home() {
             <Brain className="w-12 h-12 text-yellow-400" />
           </div>
           <h1 className="text-4xl font-bold text-gray-100 mb-4">
-            Vishal Dubey ji Website banao Yojna
+            Let me Steal your Job
           </h1>
           <p className="text-lg text-gray-300">
-            Please don't abuse the ai as i'm using llm wrapper for this project
-            and it's very costly to use it<br></br> "JO PHIR BHI NAHI MANA USKI
-            MAA RANDI"
+            Using gemini 1.5 pro in backend so don't expect much
           </p>
         </div>
 
