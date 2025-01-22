@@ -13,19 +13,23 @@ export function PreviewFrame({ files, webContainer }: PreviewFrameProps) {
     try {
       // Set up the event listener first
       webContainer.on('server-ready', (port, url) => {
-        console.log(url);
-        console.log(port);
+        console.log(`Server ready on port ${port} at ${url}`);
         setUrl(url);
       });
 
+      // Install dependencies
       const installProcess = await webContainer.spawn('npm', ['install']);
       installProcess.output.pipeTo(new WritableStream({
         write(data) {
-          console.log(data);
+          console.log('Install process output:', data);
         }
       }));
 
+      // Start the dev server
       await webContainer.spawn('npm', ['run', 'dev']);
+
+      // Check if the server is ready
+      console.log('Waiting for server to be ready...');
     } catch (error) {
       console.error('Error during setup:', error);
     }
